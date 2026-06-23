@@ -11,11 +11,15 @@ const PORT = process.env.PORT || 3001;
 // ============================================================
 // Security & CORS
 // ============================================================
+const allowedOrigins = [
+  process.env.FRONTEND_URL || 'http://localhost:3000',
+  ...(process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+    : []),
+];
+
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL || 'http://localhost:3000',
-    // Dodaj produkcijsku domenu kad bude gotova
-  ],
+  origin: allowedOrigins,
   credentials: true,
 }));
 
